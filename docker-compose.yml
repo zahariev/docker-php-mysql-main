@@ -1,0 +1,44 @@
+version: "3.8"
+
+volumes:
+  datafiles:
+
+services:
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_TCP_PORT=3306
+    volumes:
+      - datafiles:/var/lib/mysql
+    restart: always
+  website:
+    container_name: php74
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_DBHOST=mysql
+      - MYSQL_DBPORT=3306
+      - MYSQL_DBUSER=root
+      - MYSQL_DBPASS=secret
+      # - MYSQL_DBNAME=test
+    ports:
+      - 8080:80
+      - 8083:443
+    depends_on:
+      - mysql
+    volumes:
+      - ./src:/var/www/html
+  live-reloader:
+    image: apogiatzis/livereloading
+    container_name: livereloader
+    privileged: true
+    environment:
+      - RELOAD_DELAY=1.5 # seconds
+      - RELOAD_CONTAINER=<SERVICE_CONTAINER_NAME>
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./src:/var/www/html
