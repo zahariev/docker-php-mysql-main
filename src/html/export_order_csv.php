@@ -1,19 +1,15 @@
 <?php
 
-// require_once "get_orders_by_date_range.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
 
+    echo "Start Date: $start_date<br>";
+    echo "End Date: $end_date<br>";
+    // $data = get_orders_by_date_range($start_date, $end_date);
 
-$conn = require_once '../php/connection.inc';
+}
 
-    if (!($result=mysqli_query($conn,'SHOW DATABASES')))
-    printf("Error: %s\n", mysqli_error($conn));
+    exit;
 
-echo "<h3>Databases</h3>";
-
-while($row = mysqli_fetch_row( $result ))
-    echo $row[0]."<br />";
-
-$result -> free_result();
-$conn->close();
-    
-?>
+    ?>
