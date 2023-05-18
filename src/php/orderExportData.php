@@ -101,7 +101,7 @@ function getOrderProducts($conn, $orderId) {
     while ($row = $result->fetch_assoc()) {
         $products[] = json_decode($row['full_arr']);
     }
-    
+    $products[] = array();
     return $products;
 }
 
