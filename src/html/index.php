@@ -15,6 +15,11 @@
 		<input type="date" name="end_date" id="end_date" required>
 		<button type="submit">Export</button>
 	</form>
+</br>
+    <form class="productExport"action="productsExport.php" method="post">
+		
+		<button type="submit">Products Export</button>
+	</form>
 </div>
 </body>
 </html>
