@@ -91,7 +91,7 @@ ORDER BY o.id ASC";
 }
 
 function getOrderProducts($conn, $orderId) {
-    $sql = "SELECT full_arr FROM order_products WHERE id = ?";
+    $sql = "SELECT full_arr FROM order_products WHERE order_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $orderId);
     $stmt->execute();
@@ -99,10 +99,6 @@ function getOrderProducts($conn, $orderId) {
     $products = array();
 
     while ($row = $result->fetch_assoc()) {
-    //     $obj = json_decode($row['full_arr']);
-    // //    echo "<pre>".($row['full_arr'])."</pre>";
-    //   print_r($obj);
-
         $products[] = json_decode($row['full_arr']);
     }
     
